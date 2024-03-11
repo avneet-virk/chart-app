@@ -1,73 +1,84 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import {VictoryChart,VictoryLine, VictoryScatter } from 'victory';
 
 const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
+  { x: 0, y: 0 },
+  { x: 1, y: 2 },
+  { x: 2, y: 1 },
+  { x: 3, y: 4 },
+  { x: 4, y: 3 },
+  { x: 5, y: 5 }
 ];
 
-const LineReChart = () => {
-    return (
-        <LineChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        </LineChart>
-    );
-}
+const cartesianInterpolations = [
+  "basis",
+  "bundle",
+  "cardinal",
+  "catmullRom",
+  "linear",
+  "monotoneX",
+  "monotoneY",
+  "natural",
+  "step",
+  "stepAfter",
+  "stepBefore"
+];
 
-export default LineReChart
+const polarInterpolations = [
+  "basis",
+  "cardinal",
+  "catmullRom",
+  "linear"
+];
+
+const InterpolationSelect = ({ currentValue, values, onChange }) => (
+  <select onChange={onChange} value={currentValue} style={{ width: 75 }}>
+    {values.map(
+      (value) => <option value={value} key={value}>{value}</option>
+    )}
+  </select>
+);
+
+ export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      interpolation: "linear",
+      polar: false
+    };
+  }
+  render() {
+    return (
+      <div>
+        <InterpolationSelect
+          currentValue={this.state.interpolation}
+          values={this.state.polar ? polarInterpolations : cartesianInterpolations }
+          onChange={(event) => this.setState({ interpolation: event.target.value })}
+        />
+        <input
+          type="checkbox"
+          id="polar"
+          value={this.state.polar}
+          onChange={
+            (event) => this.setState({
+              polar: event.target.checked,
+              interpolation: "linear"
+            })
+          }
+          style={{ marginLeft: 25, marginRight: 5 }}
+        />
+        <label htmlFor="polar">polar</label>
+        <VictoryChart polar={this.state.polar} height={390}>
+          <VictoryLine
+            interpolation={this.state.interpolation} data={data}
+            style={{ data: { stroke: "#c43a31" } }}
+          />
+          <VictoryScatter data={data}
+            size={5}
+            style={{ data: { fill: "#c43a31" } }}
+          />
+        </VictoryChart>
+      </div>
+    );
+  }
+}
