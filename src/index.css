@@ -5,9 +5,47 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: aliceblue;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.mainContent{
+  text-align: center;
+}
+.chartLinks{
+ display: flex;
+ justify-content: space-evenly;
+ flex-wrap: wrap;
+ margin-top: 50px;
+}
+.chartLinks a {
+  width: 100px;
+  height: 50px;
+  background: antiquewhite;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: unset;
+  color: black;
+  border: 2px solid mediumvioletred;
+}
+.chartNav{
+  display: flex;
+  background: antiquewhite;
+}
+.chartNav p{
+  padding: 5px 20px;
+  cursor: pointer;
+}
+.chartNav p:hover {
+  color: cadetblue;
+}
+.chartDiv {
+  width: 80%;
+  height: 80%;
+  margin: 50px auto;
 }
