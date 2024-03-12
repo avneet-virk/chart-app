@@ -13,6 +13,7 @@ const ChartMain = () => {
         <Link to="chartJs">ChartJs</Link>
         <Link to="reCharts">ReCharts</Link>
         <Link to="victory">Victory Chart</Link>
+        <Link to="eCharts">E Charts</Link>
       </div>
     </div>
   );
